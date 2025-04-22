@@ -19,6 +19,11 @@
 pip install wangpancli
 ```
 
+安装后可使用以下任一命令：
+- `wangpancli` - 完整命令
+- `pancli` - 简写命令
+- `wpcli` - 简写命令
+
 ## 基本配置
 
 首次使用前需要配置账号信息：
@@ -83,6 +88,7 @@ wangpancli mkdir baidu:/remote/path
 - 支持本地与网盘之间的文件传输
 - 支持文件夹批量上传
 - 支持命令行彩色输出，区分文件和文件夹
+- 提供多个命令别名（wangpancli/pancli/wpcli）
 
 ## 依赖
 

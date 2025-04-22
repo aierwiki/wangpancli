@@ -13,8 +13,13 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="wangpancli",
-    entry_points={"console_scripts": ["wangpancli=wangpancli:main"]},
-    version="0.0.11",
+    entry_points={"console_scripts": [
+            "wangpancli=wangpancli:main",
+            "pancli=wangpancli:main",
+            "wpcli=wangpancli:main"
+        ]
+    },
+    version="0.1.0",
     author="Tang Yubin",
     author_email="tang-yu-bin@qq.com",
     description="cloud storage CLI (Command Line Interface)",
