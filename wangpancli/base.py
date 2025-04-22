@@ -57,7 +57,7 @@ class WangPanCLI():
     def _show_ad():
         """
         显示广告信息
-        从 https://gitee.com/aierwiki/pan_cli/blob/master/ad_data/latest.json获取广告商数据
+        获取广告数据
         {
             "ad_data_list": [
                 {
@@ -69,7 +69,7 @@ class WangPanCLI():
         }
         """
         try:
-            ad_data = requests.get("https://gitee.com/aierwiki/pan_cli/raw/master/ad_data/latest.json").json()
+            ad_data = requests.get("https://gitee.com/aierwiki/wangpancli/raw/master/ad_data/latest.json").json()
             ad_data_list = ad_data['ad_data_list']
             # weight就是展现广告的概率
             for ad in ad_data_list:

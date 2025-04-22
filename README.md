@@ -1,6 +1,17 @@
 # wangpancli
 
-百度网盘命令行工具，提供简单易用的命令行接口，方便在终端中管理您的百度网盘文件。
+多平台网盘命令行工具，提供简单易用的命令行接口，方便在终端中管理您的各类网盘文件。
+
+## 支持的网盘
+
+| 网盘名称 | 网盘类型 | 支持进度 |
+|---------|-------|---------|
+| 百度网盘 | baidu | 已支持 ✅ |
+| 阿里云盘 | aliyun | 计划支持 🚧 |
+| 夸克网盘 | quark | 计划支持 🚧 |
+| 腾讯微云 | weiyun | 计划支持 🚧 |
+
+更多网盘服务持续添加中...
 
 ## 安装
 
@@ -13,10 +24,17 @@ pip install wangpancli
 首次使用前需要配置账号信息：
 
 ```bash
-wangpancli config
+wangpancli config [网盘类型]
 ```
 
-配置过程中，您需要提供：
+例如配置百度网盘：
+
+```bash
+wangpancli config baidu
+```
+
+配置过程中，您需要提供相应网盘平台所需的授权信息。
+对于百度网盘，需要提供：
 1. 百度网盘开放平台申请的 AppKey 和 SecretKey
 2. 通过生成的授权链接获取的授权码
 
@@ -30,18 +48,18 @@ wangpancli config
 # 查看本地文件列表
 wangpancli ls /local/path
 
-# 查看网盘文件列表
-wangpancli ls wangpan:/remote/path
+# 查看网盘文件列表（如百度网盘）
+wangpancli ls baidu:/remote/path
 ```
 
 ### 复制文件
 
 ```bash
 # 从本地复制到网盘
-wangpancli cp /local/file wangpan:/remote/path
+wangpancli cp /local/file baidu:/remote/path
 
 # 从网盘下载到本地
-wangpancli cp wangpan:/remote/file /local/path
+wangpancli cp baidu:/remote/file /local/path
 
 # 本地文件复制
 wangpancli cp /source/file /dest/path
@@ -54,11 +72,13 @@ wangpancli cp /source/file /dest/path
 wangpancli mkdir /local/path
 
 # 在网盘创建目录
-wangpancli mkdir wangpan:/remote/path
+wangpancli mkdir baidu:/remote/path
 ```
 
 ## 特性
 
+- 支持多种主流网盘服务
+- 统一的命令行接口，轻松切换不同网盘
 - 支持大文件分片上传
 - 支持本地与网盘之间的文件传输
 - 支持文件夹批量上传
@@ -73,4 +93,4 @@ wangpancli mkdir wangpan:/remote/path
 
 ## 许可证
 
-[MIT License](LICENSE)
+[GNU License](LICENSE)
