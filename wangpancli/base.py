@@ -2,10 +2,12 @@ import argparse
 import requests
 import json
 import os
+import sys
 import random
 from urllib.parse import urlencode
 from .baidu_pan_sdk import BaiduPanSDK
 from loguru import logger
+# logger.add(sys.stderr, level="DEBUG")
 
 
 class WangPanCLI():

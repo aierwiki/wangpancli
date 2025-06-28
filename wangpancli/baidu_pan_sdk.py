@@ -1,13 +1,16 @@
 import requests
 import json
 import os
+import sys
 import math
 from time import sleep
 import hashlib
 from urllib.parse import urlencode
 from rich.progress import track
 from loguru import logger
+import shutil
 logger.remove(0)
+# logger.add(sys.stderr, level="DEBUG")
 
 
 class BaiduPanSDK:
@@ -218,14 +221,33 @@ class BaiduPanSDK:
         dlink_list = [result['dlink'] for result in result_list]
         dlink = dlink_list[0]
         download_url = dlink + f'&access_token={access_token}'
-        cmd = f"wget --header='User-Agent: pan.baidu.com' '{download_url}' -O {os.path.join(dest, filename)}"
-        logger.debug(f"cmd = {cmd}")
-        print(f"download {filename} complete !")
-        os.system(cmd)
+        # 检查wget命令是否存在
+        if shutil.which("wget"):
+            cmd = f"wget --header='User-Agent: pan.baidu.com' '{download_url}' -O {os.path.join(dest, filename)}"
+            logger.debug(f"cmd = {cmd}")
+            os.system(cmd)
+        else:
+            logger.debug("wget not found, using requests as fallback")
+            headers = {'User-Agent': 'pan.baidu.com'}
+            r = requests.get(download_url, headers=headers, stream=True)
+            file_path = os.path.join(dest, filename)
+            total = int(r.headers.get('content-length', 0))
+            with open(file_path, 'wb') as f:
+                downloaded = 0
+                from rich.progress import Progress
+                with Progress() as progress:
+                    task = progress.add_task(f"下载 {filename}", total=total)
+                    for chunk in r.iter_content(chunk_size=8192):
+                        if chunk:
+                            f.write(chunk)
+                            downloaded += len(chunk)
+                            progress.update(task, advance=len(chunk))
+            print(f"download {filename} complete !")
         
     
     def download(self, pan_path, dest, access_token):
         logger.debug(f"download {pan_path} to {dest}")
+        pan_path = pan_path.replace("//", "/")
         if pan_path[-1] == '/':
             child_dict = self._get_child_dict(pan_path, access_token)
             for path, child in child_dict.items():
@@ -248,5 +270,4 @@ class BaiduPanSDK:
                 sub_dir = os.path.join(dest, child['server_filename'])
                 os.system(f"mkdir {sub_dir}")
                 self.download(pan_path + "/", sub_dir, access_token)
-                
-       
+
