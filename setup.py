@@ -19,7 +19,7 @@ setuptools.setup(
             "wpcli=wangpancli:main"
         ]
     },
-    version="0.1.0",
+    version="0.1.1",
     author="Tang Yubin",
     author_email="tang-yu-bin@qq.com",
     description="cloud storage CLI (Command Line Interface)",
